@@ -14,15 +14,15 @@ Phần 1: Giới thiệu chương trình
 
 1.2. Mô hình của Class
 
-  GiaoDich
-├── ThuNhap
-└── ChiTieu
-DauTu
-└── DauTuCoPhieu
-TaiKhoan
-QuanLyTaiChinh
-DanhMucChiTieu
-NguoiDung
+ NguoiDung
+├── TaiKhoan
+└── QuanLyTaiChinh
+    ├── GiaoDich
+    │   ├── ThuNhap
+    │   └── ChiTieu
+    ├── DanhMucChiTieu
+    └── DauTu
+        └── DauTuCoPhieu
 
 Phần 2: Phân tích chương trình
 Mô tả, giải thích, diễn giả về các thành phần trong class (thuộc tính, phương thức)
