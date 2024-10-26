@@ -27,6 +27,7 @@ NguoiDung
 Phần 2: Phân tích chương trình
 Mô tả, giải thích, diễn giả về các thành phần trong class (thuộc tính, phương thức)
 **demo:**
+
 Lớp GiaoDich:
 
 Thuộc tính:
@@ -34,6 +35,7 @@ soTien: Số tiền của giao dịch.
 moTa: Mô tả giao dịch.
 Phương thức:
 hienThi(): Hiển thị thông tin giao dịch.
+
 Lớp ThuNhap (kế thừa từ GiaoDich):
 
 Phương thức:
@@ -42,6 +44,7 @@ Lớp ChiTieu (kế thừa từ GiaoDich):
 
 Phương thức:
 hienThi(): Hiển thị thông tin chi tiêu.
+
 Lớp DauTu:
 
 Thuộc tính:
@@ -50,6 +53,7 @@ thoiHan: Thời hạn đầu tư.
 Phương thức:
 hienThi(): Hiển thị thông tin đầu tư.
 soTienDaoHan(): Tính số tiền khi đáo hạn.
+
 Lớp DauTuCoPhieu (kế thừa từ DauTu):
 
 Phương thức:
@@ -62,6 +66,7 @@ Phương thức:
 nopTien(double tien): Nạp tiền vào tài khoản.
 rutTien(double tien): Rút tiền từ tài khoản.
 getSoDu(): Lấy số dư hiện tại.
+
 Lớp DanhMucChiTieu:
 
 Thuộc tính:
@@ -79,6 +84,7 @@ Phương thức:
 themGiaoDich(GiaoDich *gd): Thêm giao dịch mới.
 themDauTu(DauTu *dt): Thêm đầu tư mới.
 hienThiThongTin(double soDu): Hiển thị thông tin tài chính.
+
 Lớp NguoiDung:
 
 Thuộc tính:
