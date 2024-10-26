@@ -12,6 +12,7 @@ Phần 1: Giới thiệu chương trình
 - Các thao tác được dùng trên Class
 
 1.2. Mô hình của Class
+
   GiaoDich
 ├── ThuNhap
 └── ChiTieu
