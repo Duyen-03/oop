@@ -87,6 +87,8 @@ Phương thức:
 thucHienGiaoDich(): Thực hiện các giao dịch tài chính.
 
 Phần 3: Kết quả nghiên cứu
+
 3.1. Kiến thức đã tự nghiên cứu
+
 3.2. Vận dụng kến thức
   
