@@ -5,10 +5,12 @@ Mở rộng: Tích hợp với các dịch vụ ngân hàng, gửi thông báo n
 
 Cấu trúc báo cáo btn:
 Phần 1: Giới thiệu chương trình
+
 1.1. Mô tả
 - Giới thiệu ngữ cảnh của class
 - Các tính chất của Class
 - Các thao tác được dùng trên Class
+
 1.2. Mô hình của Class
   GiaoDich
 ├── ThuNhap
