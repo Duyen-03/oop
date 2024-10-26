@@ -3,6 +3,7 @@
 #include <cmath>
 #include <string>
 #include <vector>
+
 using namespace std;
 
 class GiaoDich {
@@ -11,10 +12,13 @@ protected:
     string moTa;
 
 public:
-    GiaoDich(double tien, const string &mota) : soTien(tien), moTa(mota) {}
+    GiaoDich(double tien, const string &mota) {
+        soTien = tien;
+        moTa = mota;
+    }
 
     virtual void hienThi() {
-        cout << setw(15) << soTien << setw(20) << moTa;
+        cout << setw(15) << soTien << setw(20) << moTa << endl;
     }
 
     double getSoTien() const {
@@ -29,7 +33,6 @@ public:
     void hienThi() {
         cout << setw(15) << "Thu Nhap" << setw(20);
         GiaoDich::hienThi();
-        cout << endl;
     }
 };
 
@@ -40,7 +43,6 @@ public:
     void hienThi() {
         cout << setw(15) << "Chi Tieu" << setw(20);
         GiaoDich::hienThi();
-        cout << endl;
     }
 };
 
@@ -50,7 +52,10 @@ protected:
     int thoiHan;
 
 public:
-    DauTu(double tien, int han) : soTien(tien), thoiHan(han) {}
+    DauTu(double tien, int han) {
+        soTien = tien;
+        thoiHan = han;
+    }
 
     virtual void hienThi() {
         cout << setw(15) << soTien << setw(15) << thoiHan;
@@ -72,90 +77,97 @@ public:
     }
 
     double soTienDaoHan() {
-        return soTien * pow((1 + 0.08), thoiHan); // Gi? s? l?i su?t l� 8% h�ng n�m
+        return soTien * pow((1 + 0.08), thoiHan); // Gi? s? l?i su?t là 8% hàng năm
     }
 };
 
-class DanhMucChiTieu {
+class KeHoachChiTieu {
 private:
-    string tenDanhMuc;
-    vector<ChiTieu*> danhSachChiTieu;
+    double mucKeHoach; // Ngân sách
+    string moTa;      // Mô t?
 
 public:
-    DanhMucChiTieu(const string &ten) : tenDanhMuc(ten) {}
+    KeHoachChiTieu(double muc, const string &moTa) : mucKeHoach(muc), moTa(moTa) {}
 
-    void themChiTieu(ChiTieu* ct) {
-        danhSachChiTieu.push_back(ct);
-    }
-
-    void thongKeChiTieu() {
-        double tongChiTieu = 0;
-        cout << "\n--THONG KE CHI TIEU--\n";
-        cout << "Danh muc: " << tenDanhMuc << endl;
-        for (int i = 0; i < danhSachChiTieu.size(); i++) {
-            danhSachChiTieu[i]->hienThi();
-            tongChiTieu += danhSachChiTieu[i]->getSoTien();
-        }
-        cout << "Tong chi tieu: " << tongChiTieu << endl;
+    void hienThiKeHoach() const {
+        cout << "Ke Hoach Chi Tieu: " << mucKeHoach << " VND, Mo ta: " << moTa << endl;
     }
 };
 
 class TaiKhoan {
 private:
+    string tenTaiKhoan;
     double soDu;
 
 public:
-    TaiKhoan(double du) : soDu(du) {}
+    TaiKhoan(const string &ten, double du) : tenTaiKhoan(ten), soDu(du) {}
 
-    void updateBalance(double amount) {
-        soDu += amount;
+    void hienThiTaiKhoan() const {
+        cout << "Tai Khoan: " << tenTaiKhoan << ", So Du: " << soDu << " VND" << endl;
     }
 
     double getSoDu() const {
         return soDu;
+    }
+
+    void capNhatSoDu(double soTien) {
+        soDu += soTien;
     }
 };
 
 class QuanLyTaiChinh {
 public:
     vector<GiaoDich*> giaoDichs;
-    vector<DanhMucChiTieu*> danhMucChiTieus;
     vector<DauTu*> dauTus;
+    vector<KeHoachChiTieu*> keHoachChiTieux;
 
     void themGiaoDich(GiaoDich *gd) {
         giaoDichs.push_back(gd);
-    }
-
-    void themDanhMucChiTieu(DanhMucChiTieu *dm) {
-        danhMucChiTieus.push_back(dm);
     }
 
     void themDauTu(DauTu *dt) {
         dauTus.push_back(dt);
     }
 
-    void hienThiThongTin(double soDu) {
+    void themKeHoachChiTieu(KeHoachChiTieu *kh) {
+        keHoachChiTieux.push_back(kh);
+    }
+
+    void hienThiThongTin(const TaiKhoan &taiKhoan) {
         cout << "-----------------------------------\n";
         cout << "|        Quan Ly Tai Chinh        |\n";
         cout << "-----------------------------------\n";
-        cout << "\n||--SO DU--: " << soDu << "||" << endl;
+
+        taiKhoan.hienThiTaiKhoan(); // Hi?n th? thông tin tài kho?n
 
         cout << "\n--GIAO DICH--: \n";
         cout << setw(15) << "Loai" << setw(15) << "So Tien" << setw(20) << "Mo Ta" << endl;
-        for (int i = 0; i < giaoDichs.size(); i++) {
+        for (size_t i = 0; i < giaoDichs.size(); i++) {
             giaoDichs[i]->hienThi();
         }
-
-        cout << "\n--DANH MUC CHI TIEU--\n";
-        for (int i = 0; i < danhMucChiTieus.size(); i++) {
-            danhMucChiTieus[i]->thongKeChiTieu();
-        }
-
+        
         cout << "\n--DAU TU--\n";
         cout << setw(15) << "Loai" << setw(15) << "So Tien" << setw(15) << "Thoi Han" << endl;
-        for (int i = 0; i < dauTus.size(); i++) {
+        for (size_t i = 0; i < dauTus.size(); i++) {
             dauTus[i]->hienThi();
         }
+
+        cout << "\n--KE HOACH CHI TIEU--\n";
+        for (size_t i = 0; i < keHoachChiTieux.size(); i++) {
+            keHoachChiTieux[i]->hienThiKeHoach();
+        }
+    }
+
+    void thongKeChiTieu() {
+        double tongChiTieu = 0;
+        for (size_t i = 0; i < giaoDichs.size(); i++) {
+            ChiTieu *chiTieu = dynamic_cast<ChiTieu*>(giaoDichs[i]);
+            if (chiTieu) {
+                tongChiTieu += chiTieu->getSoTien();
+            }
+        }
+        cout << "\n--THONG KE CHI TIEU--\n";
+        cout << "Tong chi tieu: " << tongChiTieu << endl;
     }
 };
 
@@ -164,7 +176,7 @@ public:
     QuanLyTaiChinh qlTaiChinh;
     TaiKhoan taiKhoan;
 
-    NguoiDung(double soDuBanDau) : taiKhoan(soDuBanDau) {}
+    NguoiDung(const string &tenTaiKhoan, double soDuBanDau) : taiKhoan(tenTaiKhoan, soDuBanDau) {}
 
     void thucHienGiaoDich() {
         int luaChon = -1;
@@ -172,9 +184,10 @@ public:
             cout << "\n--TUY CHON--\n";
             cout << "1. Ghi Thu Nhap\n";
             cout << "2. Ghi Chi Tieu\n";
-            cout << "3. Them Danh Muc Chi Tieu\n";
-            cout << "4. Dau Tu\n";
-            cout << "5. Thong Tin Tai Chinh\n";
+            cout << "3. Thong Ke Chi Tieu\n";  
+            cout << "4. Lap Ke Hoach Chi Tieu\n"; // Thêm tùy ch?n l?p k? ho?ch chi tiêu
+            cout << "5. Dau Tu\n";
+            cout << "6. Thong Tin Tai Chinh\n";
             cout << "0. Thoat\n";
             cout << "Nhap lua chon: ";
             cin >> luaChon;
@@ -189,7 +202,7 @@ public:
                     cin.ignore();
                     getline(cin, mota);
                     qlTaiChinh.themGiaoDich(new ThuNhap(tien, mota));
-                    taiKhoan.updateBalance(tien);
+                    taiKhoan.capNhatSoDu(tien); // C?p nh?t s? dư tài kho?n
                     break;
                 }
 
@@ -198,66 +211,47 @@ public:
                     string mota;
                     cout << "Nhap so tien: ";
                     cin >> tien;
-
-                    if (taiKhoan.getSoDu() < tien) {
+                    if (taiKhoan.getSoDu() - tien < 0) {
                         cout << "Loi: So du khong duoc duoi 0.\n";
                         break;
                     }
-
                     cin.ignore();
                     cout << "Nhap mo ta: ";
                     getline(cin, mota);
                     qlTaiChinh.themGiaoDich(new ChiTieu(tien, mota));
-                    taiKhoan.updateBalance(-tien);
+                    taiKhoan.capNhatSoDu(-tien); // C?p nh?t s? dư tài kho?n
 
+                    // Ki?m tra s? dư và g?i thông báo nh?c nh?
                     if (taiKhoan.getSoDu() < 1000) {
-                        cout << "Thong bao: So du cua ban da duoi 1000 VND. Xin vui long thanh toan nho!" << endl;
+                        cout << "Thong bao: So du cua ban da duoi 1000 VND. Xin vui long thanh toan nho!\n"; 
                     }
                     break;
                 }
 
                 case 3: {
-                    string tenDanhMuc;
-                    cout << "Nhap ten danh muc chi tieu: ";
-                    cin.ignore();
-                    getline(cin, tenDanhMuc);
-                    DanhMucChiTieu *dm = new DanhMucChiTieu(tenDanhMuc);
-                    qlTaiChinh.themDanhMucChiTieu(dm);
-                    // Ghi nh?n c�c chi ti�u cho danh m?c n�y
-                    double soTien;
-                    cout << "Nhap so luong chi tieu: ";
-                    int soLuotChiTieu;
-                    cin >> soLuotChiTieu;
-                    for (int i = 0; i < soLuotChiTieu; i++) {
-                        cout << "Nhap so tien cho chi tieu " << (i + 1) << ": ";
-                        cin >> soTien;
-                        string moTa;
-                        cout << "Nhap mo ta cho chi tieu " << (i + 1) << ": ";
-                        cin.ignore();
-                        getline(cin, moTa);
-                        dm->themChiTieu(new ChiTieu(soTien, moTa));
-                    }
+                    qlTaiChinh.thongKeChiTieu(); // G?i phương th?c th?ng kê chi tiêu
                     break;
                 }
 
-                case 4: {
-                    double tien;
-                    int han;
-                    cout << "Nhap so tien dau tu: ";
-                    cin >> tien;
-                    if (taiKhoan.getSoDu() < tien) {
-                        cout << "Loi: So du khong duoc duoi 0.\n";
-                        break;
-                    }
-                    cout << "Nhap thoi han (nam): ";
-                    cin >> han;
-                    qlTaiChinh.themDauTu(new DauTuCoPhieu(tien, han));
-                    taiKhoan.updateBalance(-tien);
+                case 4: { // L?p k? ho?ch chi tiêu
+                    double mucKeHoach;
+                    string moTa;
+                    cout << "Nhap muc ke hoach chi tieu: ";
+                    cin >> mucKeHoach;
+                    cin.ignore(); // Đ? b? qua d?ng m?i
+                    cout << "Nhap mo ta: ";
+                    getline(cin, moTa);
+                    qlTaiChinh.themKeHoachChiTieu(new KeHoachChiTieu(mucKeHoach, moTa));
                     break;
                 }
 
                 case 5: {
-                    qlTaiChinh.hienThiThongTin(taiKhoan.getSoDu());
+                    thucHienDauTu();
+                    break;
+                }
+
+                case 6: {
+                    qlTaiChinh.hienThiThongTin(taiKhoan); // Hi?n th? thông tin tài chính
                     break;
                 }
 
@@ -270,13 +264,27 @@ public:
             }
         }
     }
+
+    void thucHienDauTu() {
+        double tien;
+        int han;
+        cout << "Nhap so tien: ";
+        cin >> tien;
+        if (taiKhoan.getSoDu() - tien < 0) {
+            cout << "Loi: So du khong duoc duoi 0.\n";
+            return;
+        }
+        cout << "Nhap thoi han (nam): ";
+        cin >> han;
+        qlTaiChinh.themDauTu(new DauTuCoPhieu(tien, han));
+        taiKhoan.capNhatSoDu(-tien); // C?p nh?t s? dư tài kho?n sau khi đ?u tư
+    }
 };
 
 int main() {
     cout << "---Chao mung den voi He Thong Quan Ly Tai Chinh!---\n";
-    NguoiDung nguoiDung(0); // Khoi tao nguoi dung voi so du ban dau la 0
+    NguoiDung nguoiDung("Tai Khoan 1", 2000); // Kh?i t?o ngư?i dùng v?i s? dư ban đ?u là 2000
     nguoiDung.thucHienGiaoDich();
 
     return 0;
 }
-
