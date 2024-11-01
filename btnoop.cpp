@@ -77,14 +77,14 @@ public:
     }
 
     double soTienDaoHan() {
-        return soTien * pow((1 + 0.08), thoiHan); // Gi? s? l?i su?t là 8% hàng năm
+        return soTien * pow((1 + 0.08), thoiHan); 
     }
 };
 
 class KeHoachChiTieu {
 private:
     double mucKeHoach; // Ngân sách
-    string moTa;      // Mô t?
+    string moTa;     
 
 public:
     KeHoachChiTieu(double muc, const string &moTa) : mucKeHoach(muc), moTa(moTa) {}
@@ -138,7 +138,7 @@ public:
         cout << "|        Quan Ly Tai Chinh        |\n";
         cout << "-----------------------------------\n";
 
-        taiKhoan.hienThiTaiKhoan(); // Hi?n th? thông tin tài kho?n
+        taiKhoan.hienThiTaiKhoan(); 
 
         cout << "\n--GIAO DICH--: \n";
         cout << setw(15) << "Loai" << setw(15) << "So Tien" << setw(20) << "Mo Ta" << endl;
@@ -185,7 +185,7 @@ public:
             cout << "1. Ghi Thu Nhap\n";
             cout << "2. Ghi Chi Tieu\n";
             cout << "3. Thong Ke Chi Tieu\n";  
-            cout << "4. Lap Ke Hoach Chi Tieu\n"; // Thêm tùy ch?n l?p k? ho?ch chi tiêu
+            cout << "4. Lap Ke Hoach Chi Tieu\n"; 
             cout << "5. Dau Tu\n";
             cout << "6. Thong Tin Tai Chinh\n";
             cout << "0. Thoat\n";
@@ -202,7 +202,7 @@ public:
                     cin.ignore();
                     getline(cin, mota);
                     qlTaiChinh.themGiaoDich(new ThuNhap(tien, mota));
-                    taiKhoan.capNhatSoDu(tien); // C?p nh?t s? dư tài kho?n
+                    taiKhoan.capNhatSoDu(tien); 
                     break;
                 }
 
@@ -219,9 +219,9 @@ public:
                     cout << "Nhap mo ta: ";
                     getline(cin, mota);
                     qlTaiChinh.themGiaoDich(new ChiTieu(tien, mota));
-                    taiKhoan.capNhatSoDu(-tien); // C?p nh?t s? dư tài kho?n
+                    taiKhoan.capNhatSoDu(-tien); 
 
-                    // Ki?m tra s? dư và g?i thông báo nh?c nh?
+                    // Kiem tra so du va thong bao nhac nho 
                     if (taiKhoan.getSoDu() < 1000) {
                         cout << "Thong bao: So du cua ban da duoi 1000 VND. Xin vui long thanh toan nho!\n"; 
                     }
@@ -229,16 +229,16 @@ public:
                 }
 
                 case 3: {
-                    qlTaiChinh.thongKeChiTieu(); // G?i phương th?c th?ng kê chi tiêu
+                    qlTaiChinh.thongKeChiTieu(); 
                     break;
                 }
 
-                case 4: { // L?p k? ho?ch chi tiêu
+                case 4: { // Lap ke hoach chi tieu  
                     double mucKeHoach;
                     string moTa;
                     cout << "Nhap muc ke hoach chi tieu: ";
                     cin >> mucKeHoach;
-                    cin.ignore(); // Đ? b? qua d?ng m?i
+                    cin.ignore(); 
                     cout << "Nhap mo ta: ";
                     getline(cin, moTa);
                     qlTaiChinh.themKeHoachChiTieu(new KeHoachChiTieu(mucKeHoach, moTa));
@@ -251,7 +251,7 @@ public:
                 }
 
                 case 6: {
-                    qlTaiChinh.hienThiThongTin(taiKhoan); // Hi?n th? thông tin tài chính
+                    qlTaiChinh.hienThiThongTin(taiKhoan); 
                     break;
                 }
 
@@ -277,13 +277,25 @@ public:
         cout << "Nhap thoi han (nam): ";
         cin >> han;
         qlTaiChinh.themDauTu(new DauTuCoPhieu(tien, han));
-        taiKhoan.capNhatSoDu(-tien); // C?p nh?t s? dư tài kho?n sau khi đ?u tư
+        taiKhoan.capNhatSoDu(-tien); // Cap nhat so du tai khoan sau khi dau tu 
     }
 };
 
+
 int main() {
+    string tenTaiKhoan;
+    double soDu;
+
     cout << "---Chao mung den voi He Thong Quan Ly Tai Chinh!---\n";
-    NguoiDung nguoiDung("Tai Khoan 1", 2000); // Kh?i t?o ngư?i dùng v?i s? dư ban đ?u là 2000
+
+    cout << "Nhap ten tai khoan: ";
+    getline(cin, tenTaiKhoan);  
+
+    cout << "Nhap so du ban dau: ";
+    cin >> soDu;
+
+    // Khoi tao nguoi dung voi ten tai khoan va so du tu bàn phím
+    NguoiDung nguoiDung(tenTaiKhoan, soDu);
     nguoiDung.thucHienGiaoDich();
 
     return 0;
